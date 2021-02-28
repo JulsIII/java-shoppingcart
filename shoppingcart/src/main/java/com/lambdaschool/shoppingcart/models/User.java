@@ -11,6 +11,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 /**
  * The entity allowing interaction with the users table
@@ -172,9 +173,15 @@ public class User
      *
      * @param password the new password (String) for the user
      */
-    public void setPassword(String password)
+    public void setPasswordNoEncrypt(String password)
     {
         this.password = password;
+    }
+
+    public void setPassword(String password)
+    {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        this.password = passwordEncoder.encode(password);
     }
 
     /**
